@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fff7f8" />
+  <title>Lunchmate — happy lunches, less fuss</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+    :root { --ink:#382a33; --muted:#897b83; --pink:#d75f83; --pink-dark:#b84c70; --rose:#fff0f3; --paper:#fff; --line:#f0dfe4; --green:#4a765f; --shadow:0 16px 45px rgba(123,73,91,.09); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#fff8f8; color:var(--ink); font-family:'DM Sans',sans-serif; }
+    button,input,select { font:inherit; } button { cursor:pointer; }
+    .page { width:min(1120px,calc(100% - 36px)); margin:0 auto; }
+    header { height:76px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #f2e5e8; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:20px; font-weight:700; letter-spacing:-.04em; }
+    .brand-mark { display:grid; place-items:center; width:36px; height:36px; border-radius:13px; background:var(--pink); color:white; }
+    .header-note { color:var(--muted); font-size:12px; }
+    main { padding:39px 0 65px; }
+    .hero { position:relative; overflow:hidden; padding:34px 38px; border-radius:24px; background:linear-gradient(115deg,#ffe8ee,#fff1e9); margin-bottom:24px; }
+    .hero:after { content:'🌷'; position:absolute; right:46px; top:9px; font-size:94px; opacity:.72; transform:rotate(10deg); }
+    .eyebrow { color:var(--pink-dark); text-transform:uppercase; letter-spacing:.15em; font-size:10px; font-weight:700; }
+    h1 { max-width:650px; margin:10px 0 8px; font:600 clamp(32px,5vw,48px)/1.1 'Playfair Display',serif; letter-spacing:-.04em; }
+    .hero p { max-width:600px; margin:0; color:#816f78; font-size:14px; line-height:1.6; }
+    .section { margin-top:27px; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:12px; margin-bottom:13px; }
+    h2 { margin:0; font:600 23px 'Playfair Display',serif; letter-spacing:-.025em; }
+    .section-sub { margin:5px 0 0; color:var(--muted); font-size:12px; }
+    .card { background:var(--paper); border:1px solid var(--line); border-radius:17px; box-shadow:var(--shadow); }
+    .preferences { padding:17px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .child { border:1px solid #f3e4e8; border-radius:13px; padding:13px; background:#fffafb; }
+    .child-title { display:flex; align-items:center; gap:8px; margin-bottom:9px; font-size:13px; font-weight:700; }
+    .child-icon { display:grid; place-items:center; width:27px; height:27px; border-radius:50%; background:var(--rose); }
+    .child input { width:100%; height:38px; border:1px solid var(--line); border-radius:9px; padding:0 10px; color:var(--ink); outline:none; }
+    input:focus,select:focus { border-color:#de9aae; box-shadow:0 0 0 3px rgba(215,95,131,.1); }
+    .tiny { color:#9a8b92; font-size:10px; margin-top:6px; }
+    .planner { display:grid; grid-template-columns:310px 1fr; gap:17px; align-items:start; }
+    .filters { padding:18px; }
+    label { display:block; margin:0 0 7px; font-size:11px; font-weight:700; }
+    .field { margin-bottom:14px; }
+    input[type=text],select { width:100%; height:40px; background:#fff; border:1px solid var(--line); border-radius:9px; padding:0 10px; color:var(--ink); outline:none; }
+    .entry { display:flex; gap:6px; }
+    .entry input { flex:1; min-width:0; }
+    .add { width:40px; border:0; border-radius:9px; background:var(--rose); color:var(--pink-dark); font-size:20px; }
+    .chips,.quick { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .chip { display:inline-flex; gap:6px; align-items:center; border-radius:99px; background:var(--rose); color:#9a4762; padding:5px 8px; font-size:10px; }
+    .chip button { border:0; background:none; color:inherit; padding:0; }
+    .quick button { border:1px solid var(--line); border-radius:99px; background:white; color:#76636c; padding:5px 8px; font-size:10px; }
+    .primary { width:100%; min-height:43px; border:0; border-radius:10px; background:var(--pink); color:white; font-weight:700; }
+    .primary:hover { background:var(--pink-dark); }
+    .suggestions { min-height:280px; padding:17px; }
+    .dish-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .dish { overflow:hidden; border:1px solid #f0e5e8; border-radius:13px; background:#fff; }
+    .dish-photo { width:100%; height:138px; display:block; object-fit:cover; background:linear-gradient(135deg,#ffe8ee,#fff0dc); }
+    .dish-body { padding:12px; }
+    .dish-title-row { display:flex; justify-content:space-between; align-items:start; gap:8px; }
+    .dish h3 { margin:0; font:600 17px 'Playfair Display',serif; }
+    .health { flex:0 0 auto; color:#467356; background:#edf7ee; padding:5px 7px; border-radius:99px; font-size:9px; font-weight:700; }
+    .dish-meta { margin-top:5px; color:var(--muted); font-size:10px; }
+    .dish p { min-height:34px; margin:9px 0; color:#776a70; font-size:11px; line-height:1.5; }
+    .dish-actions { display:flex; gap:7px; }
+    .secondary { flex:1; border:1px solid var(--line); border-radius:8px; background:#fffafb; color:var(--pink-dark); padding:8px 6px; font-size:10px; font-weight:700; }
+    .weekly { padding:15px; }
+    .week-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px; }
+    .day { overflow:hidden; border:1px solid #f0e5e8; border-radius:12px; background:#fff; }
+    .day-name { background:#fff0f3; color:#a04a66; padding:8px 7px; font-size:10px; font-weight:700; }
+    .day-content { padding:8px; }
+    .day-photo { display:block; width:100%; height:70px; object-fit:cover; border-radius:7px; background:#fff0df; }
+    .day h3 { margin:7px 0 4px; font:600 13px/1.25 'Playfair Display',serif; }
+    .day-meta { color:var(--muted); font-size:9px; }
+    .change { width:100%; margin-top:8px; height:29px; border:1px solid var(--line); border-radius:7px; padding:0 5px; background:white; color:var(--pink-dark); font-size:9px; font-weight:700; }
+    .recipe-modal { position:fixed; inset:0; display:none; place-items:center; padding:18px; background:rgba(55,38,47,.42); z-index:5; }
+    .recipe-modal.open { display:grid; }
+    .recipe-box { width:min(500px,100%); max-height:88vh; overflow:auto; border-radius:18px; background:white; box-shadow:0 20px 70px #462b3a44; }
+    .recipe-box img { width:100%; height:220px; object-fit:cover; background:#ffe8ee; }
+    .recipe-copy { padding:20px; }
+    .recipe-top { display:flex; align-items:start; justify-content:space-between; gap:12px; }
+    .recipe-top h2 { font-size:25px; }
+    .close { border:0; background:var(--rose); color:var(--pink-dark); width:32px; height:32px; border-radius:50%; font-size:18px; }
+    .recipe-copy p,.recipe-copy li { color:#766a70; font-size:12px; line-height:1.6; }
+    .recipe-copy h3 { margin:17px 0 5px; font:600 16px 'Playfair Display',serif; }
+    .health-note { padding:10px; border-radius:9px; background:#eff7f0; color:#4e7659; font-size:11px; line-height:1.5; }
+    footer { border-top:1px solid #f2e5e8; padding:18px 0 25px; color:#9b8d93; font-size:10px; }
+    @media(max-width:900px) { .week-grid { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+    @media(max-width:700px) { .page{width:calc(100% - 26px)} header{height:64px}.header-note{font-size:10px}.hero{padding:25px 21px}.hero:after{right:10px;top:4px;font-size:64px}.hero p{max-width:78%}.preferences{grid-template-columns:1fr}.planner{grid-template-columns:1fr}.dish-grid{grid-template-columns:1fr 1fr}.week-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media(max-width:420px) { .dish-grid{grid-template-columns:1fr}.dish-photo{height:165px}.week-grid{grid-template-columns:1fr 1fr} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header><div class="brand"><span class="brand-mark">♡</span> lunchmate</div><div class="header-note">Made with a little love for busy moms</div></header>
+    <main>
+      <section class="hero"><div class="eyebrow">Your family’s lunch, made easier</div><h1>More happy plates. Less “what should I cook?”</h1><p>Tell us what your children enjoy and what you have at home. We’ll help you plan a week of lunches everyone can look forward to.</p></section>
+
+      <section class="section">
+        <div class="section-head"><div><h2>Little ones, big opinions</h2><p class="section-sub">Add each child’s favorite food so suggestions feel more personal.</p></div></div>
+        <div class="card preferences" id="children"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><div><h2>Find something lovely for lunch</h2><p class="section-sub">Suggestions use your ingredients, time, and family favorites.</p></div></div>
+        <div class="planner">
+          <aside class="card filters">
+            <div class="field"><label for="ingredient-input">What vegetables or ingredients do you have?</label><form id="ingredient-form" class="entry"><input id="ingredient-input" type="text" placeholder="e.g. potato, peas" autocomplete="off"><button class="add" type="submit" aria-label="Add ingredient">+</button></form><div class="chips" id="chips"></div><div class="quick" aria-label="Quick add vegetables"><button type="button" data-ingredient="tomato">🍅 Tomato</button><button type="button" data-ingredient="potato">🥔 Potato</button><button type="button" data-ingredient="spinach">🥬 Spinach</button><button type="button" data-ingredient="carrot">🥕 Carrot</button><button type="button" data-ingredient="peas">🟢 Peas</button></div></div>
+            <div class="field"><label for="meal-style">Lunch mood</label><select id="meal-style"><option value="any">Surprise us</option><option value="quick">Quick and easy</option><option value="comfort">Comfort food</option><option value="vegetarian">Vegetarian</option></select></div>
+            <div class="field"><label for="time">Time you have</label><select id="time"><option value="any">Any amount</option><option value="20">Under 20 minutes</option><option value="35">Under 35 minutes</option></select></div>
+            <button class="primary" id="suggest-button" type="button">Suggest family lunches&nbsp; →</button>
+          </aside>
+          <section class="card suggestions"><div class="section-head"><div><h2>Picked for your family</h2><p class="section-sub" id="suggestion-note">Add a favorite or ingredient to personalize ideas.</p></div></div><div id="suggestions" class="dish-grid"></div></section>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><div><h2>This week’s lunch menu</h2><p class="section-sub">Tap “Change dish” on any day to swap in another idea.</p></div></div>
+        <div class="card weekly"><div class="week-grid" id="week-grid"></div></div>
+      </section>
+    </main>
+    <footer>Lunch ideas are starting points. Adjust ingredients, spice, and portions for your family.</footer>
+  </div>
+  <div class="recipe-modal" id="recipe-modal" role="dialog" aria-modal="true" aria-labelledby="recipe-title"><article class="recipe-box"><img id="recipe-image" alt=""><div class="recipe-copy"><div class="recipe-top"><div><h2 id="recipe-title"></h2><p id="recipe-meta"></p></div><button class="close" id="close-recipe" aria-label="Close recipe">×</button></div><div id="recipe-description"></div><h3>Ingredients</h3><ul id="recipe-ingredients"></ul><h3>How to make it</h3><ol id="recipe-steps"></ol><div class="health-note" id="health-note"></div></div></article></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
